@@ -6,6 +6,7 @@ import greetingapp.repository.GreetingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,15 +29,22 @@ public class GreetingService {
 
     // Method to get a greeting message
     public String getGreetingMessage(String firstName, String lastName) {
-        return "Hello, " + (firstName != null ? firstName : "World");
+        return "Hello, " + (firstName != null ? firstName : "World") + (lastName != null ? " " + lastName : "");
     }
+
+    // Method to get a greeting message by ID
     public String getGreetingById(Long id) {
         Optional<GreetingEntity> greeting = greetingRepository.findById(id);
         if (greeting.isPresent()) {
             GreetingEntity greetingEntity = greeting.get();
-            return "Hello, " + greetingEntity.getFirstName() + " " + "!";
+            return "Hello, " + greetingEntity.getFirstName() + "!";
         } else {
             return "Greeting not found!";
         }
+    }
+
+    // Method to get all greetings from the repository
+    public List<GreetingEntity> getAllGreetings() {
+        return greetingRepository.findAll();
     }
 }

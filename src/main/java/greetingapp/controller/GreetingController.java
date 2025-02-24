@@ -13,9 +13,11 @@ public class GreetingController {
 
     // GET Method: Returns a greeting message
     @GetMapping
-    public String getGreeting() {
-        return greetingService.getGreetingMessage();
+    public String getGreeting(@RequestParam(required = false) String firstName,
+                              @RequestParam(required = false) String lastName) {
+        return greetingService.getGreetingMessage(firstName, lastName);
     }
+
 
 
     // POST Method: Accepts a name and returns a personalized greeting

@@ -47,4 +47,25 @@ public class GreetingService {
     public List<GreetingEntity> getAllGreetings() {
         return greetingRepository.findAll();
     }
+
+    // Method to update a greeting message by ID
+    public String updateGreeting(Long id, Greeting greetingDto) {
+        Optional<GreetingEntity> greeting = greetingRepository.findById(id);
+
+        if (greeting.isPresent()) {
+            // Retrieve the existing GreetingEntity
+            GreetingEntity greetingEntity = greeting.get();
+
+            // Update the firstName and lastName with the new values
+            greetingEntity.setFirstName(greetingDto.getName());  // Assuming 'name' is used for firstName
+
+            // Save the updated entity back to the database
+            greetingRepository.save(greetingEntity);
+
+            return "{\"message\": \"Greeting updated for " + greetingDto.getName() + "\"}";
+        } else {
+            return "{\"message\": \"Greeting not found!\"}";
+        }
+    }
+
 }

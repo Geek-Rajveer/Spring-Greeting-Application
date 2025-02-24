@@ -1,20 +1,31 @@
 package greetingapp.service;
 
+import greetingapp.dto.Greeting;
+import greetingapp.entity.GreetingEntity;
+import greetingapp.repository.GreetingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GreetingService {
 
-    // Method to return the appropriate greeting message based on input
+    @Autowired
+    private GreetingRepository greetingRepository;
+
+    // Method to save the Greeting to the database
+    public String saveGreeting(Greeting greetingDto) {
+        // Map the Greeting DTO to the GreetingEntity
+        GreetingEntity greetingEntity = new GreetingEntity();
+        greetingEntity.setFirstName(greetingDto.getName());  // Use the 'name' field for firstName
+
+        // Save the GreetingEntity in the database
+        greetingRepository.save(greetingEntity);
+
+        return "{\"message\": \"Greeting saved for " + greetingDto.getName() + "\"}";
+    }
+
+    // Method to get a greeting message
     public String getGreetingMessage(String firstName, String lastName) {
-        if (firstName != null && lastName != null) {
-            return "{\"message\": \"Hello, " + firstName + " " + lastName + "!\"}";
-        } else if (firstName != null) {
-            return "{\"message\": \"Hello, " + firstName + "!\"}";
-        } else if (lastName != null) {
-            return "{\"message\": \"Hello, Mr/Ms " + lastName + "!\"}";
-        } else {
-            return "{\"message\": \"Hello, world!\"}";
-        }
+        return "Hello, " + (firstName != null ? firstName : "World");
     }
 }

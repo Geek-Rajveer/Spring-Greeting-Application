@@ -1,16 +1,22 @@
 package greetingapp.controller;
 
 import greetingapp.dto.Greeting;
+import greetingapp.service.GreetingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/greeting")
 public class GreetingController {
+    @Autowired
+    private GreetingService greetingService;
+
     // GET Method: Returns a greeting message
     @GetMapping
     public String getGreeting() {
-        return "{\"message\": \"Hello, world!\"}";
+        return greetingService.getGreetingMessage();
     }
+
 
     // POST Method: Accepts a name and returns a personalized greeting
     @PostMapping

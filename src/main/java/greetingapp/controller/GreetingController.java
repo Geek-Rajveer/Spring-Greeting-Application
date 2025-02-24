@@ -48,4 +48,11 @@ public class GreetingController {
     public List<GreetingEntity> getAllGreetings() {
         return greetingService.getAllGreetings();
     }
+
+    // PUT Method: Edit a greeting message by ID
+    @PutMapping("/{id}")
+    public String editGreeting(@PathVariable Long id, @RequestBody Greeting greeting) {
+        return greetingService.updateGreeting(id, greeting); // Call the service method to update the greeting
+    }
+
 }
